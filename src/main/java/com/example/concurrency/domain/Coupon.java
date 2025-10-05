@@ -1,15 +1,27 @@
 package com.example.concurrency.domain;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "coupons")
-@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor @Builder
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Coupon {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // 총 발급 가능 수량(예: 100장)
@@ -22,7 +34,9 @@ public class Coupon {
 
     // 단순 로직: issuedCount < totalQuantity 일 때만 1장 발급
     public boolean issueOne() {
-        if (issuedCount >= totalQuantity) return false;
+        if (issuedCount >= totalQuantity) {
+            return false;
+        }
         issuedCount += 1;
         return true;
     }
