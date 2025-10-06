@@ -23,9 +23,6 @@ public class Coupon {
     @Column(nullable = false)
     private int issuedCount;
 
-    @Version
-    private Long version;
-
     // 단순 로직: issuedCount < totalQuantity 일 때만 1장 발급
     public boolean issueOne() {
         if (issuedCount >= totalQuantity) {
