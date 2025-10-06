@@ -1,5 +1,6 @@
 package com.example.concurrency.service;
 
+import com.example.concurrency.aop.DistributedLock;
 import com.example.concurrency.domain.Coupon;
 import com.example.concurrency.repository.CouponRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +14,9 @@ public class CouponService {
     private final CouponRepository couponRepository;
 
     @Transactional
+    @DistributedLock(key = "#couponId")
     public boolean issue(Long couponId) {
-        Coupon coupon = couponRepository.findByIdForUpdate(couponId)
+        Coupon coupon = couponRepository.findById(couponId)
                 .orElseThrow(() -> new IllegalArgumentException("coupon not found"));
         return coupon.issueOne();
     }
