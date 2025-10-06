@@ -14,7 +14,7 @@ public class CouponService {
 
     @Transactional
     public boolean issue(Long couponId) {
-        Coupon coupon = couponRepository.findById(couponId)
+        Coupon coupon = couponRepository.findByIdForUpdate(couponId)
                 .orElseThrow(() -> new IllegalArgumentException("coupon not found"));
         return coupon.issueOne();
     }
